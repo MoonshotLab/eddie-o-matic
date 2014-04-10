@@ -8,10 +8,10 @@ exports.broadcast = function(opts, next){
   ].join('');
 
   var degrees = 0;
-  if(opts.floor = 1) degrees = 15;
-  else if(opts.floor = 2) degrees = 30;
-  else if(opts.floor = 3) degrees = 60;
-  else if(opts.floor = 4) degrees = 90;
+  if(opts.floor == 1) degrees = 15;
+  else if(opts.floor == 2) degrees = 30;
+  else if(opts.floor == 3) degrees = 60;
+  else if(opts.floor == 4) degrees = 90;
 
   var postParams = [
     'access_token=',
@@ -22,8 +22,10 @@ exports.broadcast = function(opts, next){
     degrees
   ].join('');
 
-  needle.post(url, postParams, function(req, res){
-    console.log('sent request to spark');
-    if(next) next(res);
+  needle.post(url, postParams, function(err, res){
+    if(err) console.error(err);
+    else console.log('sent to server');
+
+    if(next) next(err, res);
   });
 };
