@@ -44,10 +44,20 @@ var fetchMessage = function(accountId, messageId, messageSubject, next){
 };
 
 
-var checkMessageForTerms = function(content, next){
-  var terms = config.terms;
-  var matches = {};
-  console.log(content);
+var checkMessageForTerms = function(message, next){
+  var body = message.content.toLowerCase();
+  var subject = message.subject.toLowerCase();
+  var matches = [];
+
+  config.terms.some(function(term){
+    term.labels.some(function(label){
+      if(body.indexOf(label) != -1 || subject.indexOf(label) != -1){
+        matches.push(term);
+        return;
+      }
+    });
+  });
+
   if(next) next(matches);
 };
 
