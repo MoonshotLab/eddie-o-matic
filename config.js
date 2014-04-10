@@ -1,10 +1,14 @@
 exports.terms = [
   {
     pinId: 0,
-    labels: ['donu', 'cake', 'sweets', 'dean', 'deluca']
+    labels: ['donut', 'cake', 'sweets', 'dean', 'deluca', 'overs']
   },
   {
     pinId: 1,
+    labels: ['truck']
+  }
+  {
+    pinId: 2,
     labels: ['bbq', 'meat']
   }
 ];

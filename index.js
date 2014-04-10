@@ -81,6 +81,14 @@ var checkMessageForTerms = function(message, next){
     if(content.indexOf('4') != -1) floor = 4;
   }
 
+  // More guessing
+  if(!floor){
+    if(content.indexOf('first') != -1) floor = 1;
+    if(content.indexOf('second') != -1) floor = 2;
+    if(content.indexOf('third') != -1) floor = 3;
+    if(content.indexOf('fourth') != -1) floor = 4;
+  }
+
   if(next) next(matches, floor);
 }({
   subject: 'Cake',
