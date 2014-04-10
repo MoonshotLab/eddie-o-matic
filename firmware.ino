@@ -32,9 +32,11 @@ void setup()
 void loop(){
   unsigned long now = millis();
 
-  if(now-lastUpdate > 30000){
+  if(now-lastUpdate > 15000){
     for(int i=0; i<8; i++){
       digitalWrite(pins[i], 0);
     }
+
+    FLOOR_SELECTOR.write(0);
   }
 }
