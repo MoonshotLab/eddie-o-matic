@@ -34,7 +34,7 @@ exports.newMail = function(){
   parseRequest(this.request, function(err, message){
     makeResponse(self.response, {'ok' : 'cool' });
 
-    if(!err){
+    if(!err && message){
       var subject = message.message_data.subject;
 
       mail.fetchMessage({

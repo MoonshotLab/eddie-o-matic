@@ -1,3 +1,4 @@
+var config = require('../config');
 var ContextIO = require('contextio');
 var contextClient = new ContextIO.Client({
   key: process.env.CONTEXT_IO_KEY,
@@ -5,10 +6,10 @@ var contextClient = new ContextIO.Client({
 });
 
 
-exports.fetchMessage = function(accountId, messageId, messageSubject, next){
+exports.fetchMessage = function(opts, next){
   contextClient
-    .accounts(accountId)
-    .messages(messageId)
+    .accounts(opts.accountId)
+    .messages(opts.messageId)
     .body()
     .get(function(err, res){
       if(err) console.log(err);
@@ -18,7 +19,7 @@ exports.fetchMessage = function(accountId, messageId, messageSubject, next){
 
 
 exports.parseMessage = function(message, next){
-  var body = message.content.toLowerCase();
+  var body = message.body.toLowerCase();
   var subject = message.subject.toLowerCase();
   var content = subject + ' ' + body;
   var matches = [];
@@ -60,5 +61,5 @@ exports.parseMessage = function(message, next){
     if(content.indexOf('fourth') != -1) floor = 4;
   }
 
-  if(next) next({ matches: matches, floor: floor });
+  if(matches.length && next) next({ matches: matches, floor: floor });
 };
