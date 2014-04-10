@@ -6,7 +6,7 @@ exports.terms = [
   {
     pinId: 1,
     labels: ['truck']
-  }
+  },
   {
     pinId: 2,
     labels: ['bbq', 'meat']
