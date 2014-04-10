@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "contextio": "^0.4.0",
-    "pathways": "0.0.11"
+    "pathways": "0.0.11",
+    "needle": "^0.7.0"
   }
 }
