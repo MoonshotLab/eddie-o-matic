@@ -18,5 +18,5 @@ Inconclusive so far...
 ## Testing the Spark
 I've written the following curl commands to help me ensure the spark is working correctly.
 
-* Retrive spark api methods (ensures connection) - `curl https://api.spark.io/v1/devices/{deviceID}?access_token={accessToken}
-* Set the state of a digital pin and the servo - `curl https://api.spark.io/v1/devices/{deviceId}/updateState -d access_token={accessToken} -d params={pinId},{servoPosition}
+* Retrive spark api methods (ensures connection) - `curl https://api.spark.io/v1/devices/{deviceID}?access_token={accessToken}`
+* Set the state of a digital pin and the servo - `curl https://api.spark.io/v1/devices/{deviceId}/updateState -d access_token={accessToken} -d params={pinId},{servoPosition}`
