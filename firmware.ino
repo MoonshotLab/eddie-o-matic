@@ -24,6 +24,7 @@ int updateState(String param)
 void setup()
 {
   FLOOR_SELECTOR.attach(A0);
+  FLOOR_SELECTOR.write(165);
 
   for(int i=0; i<8; i++){
     pinMode(pins[i], OUTPUT);
@@ -40,6 +41,6 @@ void loop(){
       digitalWrite(pins[i], 0);
     }
 
-    FLOOR_SELECTOR.write(0);
+    FLOOR_SELECTOR.write(165);
   }
 }
