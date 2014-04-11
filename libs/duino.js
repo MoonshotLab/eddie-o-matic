@@ -22,9 +22,6 @@ exports.broadcast = function(opts, next){
     degrees
   ].join('');
 
-  console.log(url);
-  console.log(postParams);
-
   needle.post(url, postParams, function(err, res){
     if(err) console.error(err);
     else console.log('sent to server');

@@ -61,5 +61,6 @@ exports.parseMessage = function(message, next){
     if(content.indexOf('fourth') != -1) floor = 4;
   }
 
+  console.log('new message from Eddie', content);
   if(matches.length && next) next({ matches: matches, floor: floor });
 };
