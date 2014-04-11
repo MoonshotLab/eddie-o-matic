@@ -23,7 +23,7 @@ exports.parseMessage = function(message, next){
   var subject = message.subject.toLowerCase();
   var content = subject + ' ' + body;
   var matches = [];
-  var floor = 0;
+  var floor = 1;
 
   // Find matching terms
   config.terms.some(function(term){
@@ -35,32 +35,44 @@ exports.parseMessage = function(message, next){
     });
   });
 
-  // Try a good guess
+  // Try a good guess, look for the word floor and any numbers
+  // which are close to the word
   if(content.indexOf('floor') != -1){
     var index = content.indexOf('floor');
     var sub = content.substring(index-10, index+10);
     if(sub.indexOf('1') != -1) floor = 1;
-    if(sub.indexOf('2') != -1) floor = 2;
-    if(sub.indexOf('3') != -1) floor = 3;
-    if(sub.indexOf('4') != -1) floor = 4;
+    else if(sub.indexOf('2') != -1) floor = 2;
+    else if(sub.indexOf('3') != -1) floor = 3;
+    else if(sub.indexOf('4') != -1) floor = 4;
   }
 
-  // Give up and look at entire string
+  // Give up and look at entire string, searching for
+  // numbers and their appropriate suffix
   if(!floor){
-    if(content.indexOf('1') != -1) floor = 1;
-    if(content.indexOf('2') != -1) floor = 2;
-    if(content.indexOf('3') != -1) floor = 3;
-    if(content.indexOf('4') != -1) floor = 4;
+    if(content.indexOf('1st') != -1) floor = 1;
+    else if(content.indexOf('2nd') != -1) floor = 2;
+    else if(content.indexOf('3rd') != -1) floor = 3;
+    else if(content.indexOf('4th') != -1) floor = 4;
   }
 
   // More guessing
   if(!floor){
     if(content.indexOf('first') != -1) floor = 1;
-    if(content.indexOf('second') != -1) floor = 2;
-    if(content.indexOf('third') != -1) floor = 3;
-    if(content.indexOf('fourth') != -1) floor = 4;
+    else if(content.indexOf('second') != -1) floor = 2;
+    else if(content.indexOf('third') != -1) floor = 3;
+    else if(content.indexOf('fourth') != -1) floor = 4;
   }
 
-  console.log('new message from Eddie', content);
+  // Look at the first 20 characters... trying to
+  // avoid the e-mail signature
+  if(!floor){
+    var sub = content.substring(0, 20);
+    if(sub.indexOf('1') != -1) floor = 1;
+    else if(sub.indexOf('2') != -1) floor = 2;
+    else if(sub.indexOf('3') != -1) floor = 3;
+    else if(sub.indexOf('4') != -1) floor = 4;
+  }
+
+  console.log('new food alert... \n', content, '\n --------------');
   if(matches.length && next) next({ matches: matches, floor: floor });
 };
