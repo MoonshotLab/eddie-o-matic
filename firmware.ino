@@ -8,8 +8,11 @@ int updateState(String param)
 {
   lastUpdate = millis();
 
-  int pinNumber = param.charAt(0);
+  int pinNumber = param[0] - '0';
   int floorValue = param.substring(2, param.length()).toInt();
+
+  char publishString[64];
+  sprintf(publishString, "%d - %d", pinNumber, floorValue);
 
   FLOOR_SELECTOR.write(floorValue);
   digitalWrite(pins[pinNumber], 1);
