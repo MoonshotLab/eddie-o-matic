@@ -1,4 +1,5 @@
 Servo FLOOR_SELECTOR;
+Servo BELL;
 int pins[] = {D0, D1, D2, D3, D4, D5, D6, D7};
 unsigned long lastUpdate = 0UL;
 
@@ -17,6 +18,10 @@ int updateState(String param)
   FLOOR_SELECTOR.write(floorValue);
   digitalWrite(pins[pinNumber], 1);
 
+  BELL.write(180);
+  delay(1000);
+  BELL.write(0);
+
   return 1;
 }
 
@@ -25,6 +30,8 @@ void setup()
 {
   FLOOR_SELECTOR.attach(A0);
   FLOOR_SELECTOR.write(165);
+  BELL.attach(A4);
+  BELL.write(0);
 
   for(int i=0; i<8; i++){
     pinMode(pins[i], OUTPUT);
