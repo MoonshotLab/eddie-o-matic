@@ -1,42 +1,32 @@
 exports.terms = [
   {
-    // Drinks
+    // Sweets
     pinId: 0,
-    labels: ['margarita', 'beer']
+    labels: ['cake', 'ice cream', 'desert', 'dessert', 'cookie', 'chocolate']
+  },
+  {
+    // Drinks
+    pinId: 1,
+    labels: ['margarita', 'beer', 'alcohol']
+  },
+  {
+    // Left Over Lunch
+    pinId: 2,
+    labels: ['left over', 'leftover', 'buffet', 'food', 'sandwich']
+  },
+  {
+    // Pastries
+    pinId: 3,
+    labels: ['cup cake', 'cupcake', 'donut', 'bagel', 'muffin']
   },
   {
     // Coffee Truck
-    pinId: 1,
+    pinId: 4,
     labels: ['coffee']
   },
   {
     // Food Truck
-    pinId: 2,
-    labels: ['food truck', 'truck']
-  },
-  {
-    // Sweets
-    pinId: 3,
-    labels: ['cake', 'ice cream', 'desert', 'dessert']
-  },
-  {
-    // Left Over Lunch
-    pinId: 4,
-    labels: ['left over', 'leftover', 'buffet', 'food']
-  },
-  {
-    // Pastry
     pinId: 5,
-    labels: ['cup cake', 'cupcake', 'donut', 'bagel', 'muffin']
-  },
-  {
-    // Breakfast
-    pinId: 6,
-    labels: ['breakfast', 'egg', 'sausage', 'buffet']
-  },
-  {
-    // Unknown
-    pinId: 7,
-    labels: ['eat', 'food', 'hungry']
+    labels: ['food truck', 'truck']
   }
 ];
