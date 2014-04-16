@@ -13,7 +13,10 @@ exports.fetchMessage = function(opts, next){
     .body()
     .get(function(err, res){
       if(err) console.log(err);
-      if(next) next(res.body[0].content);
+      if(next){
+        if(res && res.body)
+          next(res.body[0].content);
+      }
     });
 };
 
