@@ -18,9 +18,9 @@ int updateState(String param)
   FLOOR_SELECTOR.write(floorValue);
   digitalWrite(pins[pinNumber], 1);
 
-  BELL.write(180);
+  BELL.write(145);
   delay(1000);
-  BELL.write(0);
+  BELL.write(125);
 
   return 1;
 }
@@ -29,9 +29,9 @@ int updateState(String param)
 void setup()
 {
   FLOOR_SELECTOR.attach(A0);
-  FLOOR_SELECTOR.write(165);
+  FLOOR_SELECTOR.write(90);
   BELL.attach(A4);
-  BELL.write(0);
+  BELL.write(125);
 
   for(int i=0; i<8; i++){
     pinMode(pins[i], OUTPUT);
@@ -48,6 +48,6 @@ void loop(){
       digitalWrite(pins[i], 0);
     }
 
-    FLOOR_SELECTOR.write(165);
+    FLOOR_SELECTOR.write(90);
   }
 }

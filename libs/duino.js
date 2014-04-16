@@ -7,11 +7,11 @@ exports.broadcast = function(opts, next){
     '/updateState'
   ].join('');
 
-  var degrees = 165;
-  if(opts.floor == 1) degrees = 132;
-  else if(opts.floor == 2) degrees = 87;
-  else if(opts.floor == 3) degrees = 43;
-  else if(opts.floor == 4) degrees = 10;
+  var degrees = 90;
+  if(opts.floor == 1) degrees = 157;
+  else if(opts.floor == 2) degrees = 115;
+  else if(opts.floor == 3) degrees = 65;
+  else if(opts.floor == 4) degrees = 20;
 
   var postParams = [
     'access_token=',
