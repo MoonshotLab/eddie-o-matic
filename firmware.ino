@@ -9,7 +9,7 @@ int updateState(String param)
   int pinNumber = param[0] - '0';
   int location = param.substring(2, param.length()).toInt();
 
-  BELL.write(150);
+  BELL.write(165);
   digitalWrite(pins[pinNumber], 1);
   delay(100);
   BELL.write(125);
