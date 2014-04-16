@@ -9,24 +9,20 @@ int updateState(String param)
   int pinNumber = param[0] - '0';
   int location = param.substring(2, param.length()).toInt();
 
-  char publishString[64];
-  sprintf(publishString, "%d - %d", pinNumber, location);
-
-  BELL.write(145);
-  delay(1000);
-  BELL.write(125);
-  delay(1000);
-
+  BELL.write(150);
   digitalWrite(pins[pinNumber], 1);
-  FLOOR_SELECTOR.write(location);
+  delay(100);
+  BELL.write(125);
+  delay(300);
 
-  delay(5000);
+  FLOOR_SELECTOR.write(location);
+  delay(15000);
 
   // Reset
   for(int i=0; i<6; i++){
     digitalWrite(pins[i], 0);
   }
-  FLOOR_SELECTOR.write(90);
+  FLOOR_SELECTOR.write(88);
 
   return 1;
 }
@@ -37,7 +33,9 @@ void setup()
   FLOOR_SELECTOR.attach(A0);
   BELL.attach(A4);
 
-  FLOOR_SELECTOR.write(90);
+  FLOOR_SELECTOR.write(88);
+  delay(500);
+  BELL.write(125);
 
   for(int i=0; i<6; i++){
     pinMode(pins[i], OUTPUT);
