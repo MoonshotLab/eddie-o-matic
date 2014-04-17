@@ -8,7 +8,7 @@ exports.terms = [
   {
     // Drinks
     pinId: 1,
-    labels: ['margarita', 'beer', 'alcohol'],
+    labels: ['margarita', 'beer', 'alcohol', 'thirsty thursday'],
     name: 'Drinks'
   },
   {
