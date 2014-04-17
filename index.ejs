@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Eddie-O-Matic</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style type='text/css'>
+      #container{
+        width: 90%;
+        margin: auto;
+      }
+      label, select, h1, a{
+        font-family: Helvetica, Arial, Verdana;
+      }
+      label, select, a{
+        font-size: 16px;
+      }
+      label{
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 5px;
+      }
+      select{
+        margin-bottom: 20px;
+      }
+      .form-el{
+        display: block;
+      }
+      a{
+        background-color: rgba(0,0,0,.25);
+        padding: 10px 25px;
+        text-decoration: none;
+        color: black;
+        display: inline-block;
+      }
+    </style>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+      var accessToken = "<%= accessToken %>";
+      var ajaxURL = "<%= ajaxURL %>";
+
+      var submitForm = function(){
+        var floorValue = $('#floor-selector').val();
+        var pinNumber = $('#term-selector').val();
+        var postParams = [
+          'access_token=',
+          accessToken,
+          '&params=',
+          pinNumber,
+          ',',
+          floorValue
+        ].join('');
+
+        $.ajax({
+          method: 'POST',
+          url: ajaxURL,
+          data: postParams
+        });
+      };
+
+      $(function(){
+        $('#submit').click(function(e){
+          e.preventDefault();
+          submitForm()
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id='container'>
+      <h1>Eddie-O-Matic</h1>
+
+      <div class='form-el'>
+        <label>Floor</label>
+        <select id='floor-selector'>
+          <% for(var i=0; i<floors.length; i++){ %>
+            <option value=<%= floors[i].degrees %>>
+              <%= floors[i].number %>
+            </option>
+          <% } %>
+        </select>
+      </div>
+
+      <div class='form-el'>
+        <label>Term</label>
+        <select id='term-selector'>
+          <% for(var i=0; i<terms.length; i++){ %>
+            <option value=<%= terms[i].pinId %>>
+              <%= terms[i].name %>
+            </option>
+          <% } %>
+        </select>
+      </div>
+
+      <a href='#' id='submit'>Send</a>
+    </div>
+
+  </body>
+</html>

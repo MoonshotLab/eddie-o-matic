@@ -1,4 +1,5 @@
 var needle = require('needle');
+var config = require('../config');
 
 exports.broadcast = function(opts, next){
   var url = [
@@ -8,10 +9,8 @@ exports.broadcast = function(opts, next){
   ].join('');
 
   var degrees = 90;
-  if(opts.floor == 1) degrees = 157;
-  else if(opts.floor == 2) degrees = 115;
-  else if(opts.floor == 3) degrees = 65;
-  else if(opts.floor == 4) degrees = 20;
+  if(opts.floor)
+    degrees = config.floors[opts.floor - 1].degrees;
 
   var postParams = [
     'access_token=',

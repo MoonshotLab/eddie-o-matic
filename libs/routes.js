@@ -1,5 +1,9 @@
 var mail = require('./mail');
 var duino = require('./duino');
+var config = require('../config');
+var ejs = require('ejs');
+var fs = require('fs');
+var htmlFile = null;
 
 
 var parseRequest = function(request, next){
@@ -20,8 +24,25 @@ var makeResponse = function(response, obj){
 };
 
 
+var makeHTML = function(){
+  fs.readFile('./index.ejs', 'utf8', function(err, data){
+    htmlFile = ejs.render(data, {
+      ajaxURL: [
+        'https://api.spark.io/v1/devices/',
+        process.env.SPARK_CORE_ID,
+        '/updateState'
+      ].join(''),
+      accessToken: process.env.SPARK_CORE_TOKEN,
+      terms: config.terms,
+      floors: config.floors
+    });
+  });
+}();
+
+
 exports.home = function(){
-  makeResponse(this.response, {'ok' : 'cool' });
+  this.response.writeHead(200, { 'Content-Type': 'text/html'});
+  this.response.end(htmlFile);
 };
 
 exports.error = function(){
