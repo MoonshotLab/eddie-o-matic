@@ -14,7 +14,7 @@ exports.terms = [
   {
     // Left Over Lunch
     pinId: 2,
-    labels: ['left over', 'leftover', 'buffet', 'food', 'sandwich', 'salad', 'dean', 'deluca', 'muffaletta'],
+    labels: ['left over', 'leftover', 'buffet', 'food', 'sandwich', 'salad', 'dean', 'deluca', 'muffaletta', 'meat', 'eat'],
     name: 'Left Over Lunch'
   },
   {
