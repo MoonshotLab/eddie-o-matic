@@ -78,7 +78,16 @@ exports.parseMessage = function(message, next){
       else if(sub.indexOf('4') != -1) floor = 4;
     }
 
-    console.log('new food alert... \n', content, '\n --------------');
-    if(matches.length && next) next({ matches: matches, floor: floor });
+    if(matches.length && next){
+      console.log(
+        'new food alert... \n',
+        'matched:',
+        matches,
+        '\n',
+        content,
+        '\n --------------'
+      );
+      next({ matches: matches, floor: floor });
+    }
   }
 };
