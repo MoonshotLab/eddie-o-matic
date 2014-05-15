@@ -1,7 +1,9 @@
+var Q = require('q');
 var needle = require('needle');
 var config = require('../config');
 
-exports.broadcast = function(opts, next){
+exports.broadcast = function(opts){
+  var deferred = Q.defer();
   var url = [
     'https://api.spark.io/v1/devices/',
     process.env.SPARK_CORE_ID,
@@ -25,6 +27,11 @@ exports.broadcast = function(opts, next){
     if(err) console.error(err);
     else console.log('sent to server');
 
-    if(next) next(err, res);
+    deferred.resolve({
+      err: err,
+      res: res
+    });
   });
+
+  return deferred.promise;
 };

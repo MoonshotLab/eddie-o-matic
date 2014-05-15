@@ -1,3 +1,4 @@
+var Q = require('Q');
 var mail = require('./mail');
 var duino = require('./duino');
 var config = require('../config');
@@ -6,15 +7,19 @@ var fs = require('fs');
 var htmlFile = null;
 
 
-var parseRequest = function(request, next){
+var parseRequest = function(request){
+  var deferred = Q.defer();
   var body = '';
+
   request.on('data', function(chunk){
     body += chunk;
   });
 
   request.on('end', function(){
-    if(next) next(null, JSON.parse(body));
+    deferred.resolve(json.parse(body));
   });
+
+  return deferred.promise;
 };
 
 
@@ -46,27 +51,26 @@ exports.home = function(){
 };
 
 exports.error = function(){
-  console.error('error posting to this app :(')
+  console.error('error posting to this app :(');
   makeResponse(this.response, {'oh' : 'no' });
 };
 
 exports.newMail = function(){
   var self = this;
-  parseRequest(this.request, function(err, message){
-    makeResponse(self.response, {'ok' : 'cool' });
+  var message = {};
 
-    if(!err && message){
-      var subject = message.message_data.subject;
+  parseRequest(this.request)
+    .then(function(req){
+      message.subject = req.message_data.subject;
+      message.accountId = req.account_id;
+      message.messageId = req.message_data.message_id;
 
-      mail.fetchMessage({
-        accountId: message.account_id,
-        messageId: message.message_data.message_id
-      }, function(messageBody){
-        mail.parseMessage({
-          subject: subject,
-          body: messageBody
-        }, duino.broadcast);
-      });
-    }
-  });
+      mail.fetchMessage(message)
+        .then(mail.parseMessage)
+        .then(duino.broadcast)
+        .then(function(res){
+          if(!res.err)
+            makeResponse(self.response, {'ok' : 'cool' });
+        });
+    });
 };

@@ -1,3 +1,4 @@
+var Q = require('q');
 var config = require('../config');
 var ContextIO = require('contextio');
 var contextClient = new ContextIO.Client({
@@ -6,22 +7,27 @@ var contextClient = new ContextIO.Client({
 });
 
 
-exports.fetchMessage = function(opts, next){
+exports.fetchMessage = function(message){
+  var deferred = Q.defer();
+
   contextClient
-    .accounts(opts.accountId)
-    .messages(opts.messageId)
+    .accounts(message.accountId)
+    .messages(message.messageId)
     .body()
     .get(function(err, res){
       if(err) console.log(err);
-      if(next){
-        if(res && res.body)
-          next(res.body[0].content);
+      if(res && res.body){
+        message.body = res.body[0].content;
+        deferred.resolve(message);
       }
     });
+
+  return deferred.promise;
 };
 
 
-exports.parseMessage = function(message, next){
+exports.parseMessage = function(message){
+  var deferred = Q.defer();
   var body = message.body.toLowerCase();
   var subject = message.subject.toLowerCase();
   var content = subject + ' ' + body;
@@ -78,7 +84,7 @@ exports.parseMessage = function(message, next){
       else if(sub.indexOf('4') != -1) floor = 4;
     }
 
-    if(matches.length && next){
+    if(matches.length){
       console.log(
         'new food alert... \n',
         'matched:',
@@ -87,7 +93,13 @@ exports.parseMessage = function(message, next){
         content,
         '\n --------------'
       );
-      next({ matches: matches, floor: floor });
+
+      message.matches = matches;
+      message.floor = floor;
+
+      deferred.resolve(message);
     }
   }
+
+  return deferred.promise;
 };
