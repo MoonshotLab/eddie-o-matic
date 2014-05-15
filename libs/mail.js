@@ -85,12 +85,19 @@ exports.parseMessage = function(message){
     }
 
     if(matches.length){
+      var matchedNames = [];
+      matches.forEach(function(match){
+        matchedNames.push(match.name);
+      });
+
       console.log(
+        '\n',
         'new food alert... \n',
         'matched:',
-        matches,
+        matchedNames.join(' '),
         '\n',
-        content,
+        'subject:',
+        message.subject,
         '\n --------------'
       );
 
