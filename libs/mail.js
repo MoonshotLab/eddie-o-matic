@@ -61,7 +61,7 @@ exports.fetchMessage = function(message){
     .body()
     .get(function(err, res){
       if(err) console.log(err);
-      if(res && res.body){
+      if(res && res.body && res.body.length){
         message.body = res.body[0].content;
         deferred.resolve(message);
       }
@@ -98,14 +98,15 @@ exports.parseMessage = function(message){
       });
 
       console.log(
+        '\n --------------',
+        'new food alert... \n\n',
+        'matched :',
+        matchedNames.join(', '),
         '\n',
-        'new food alert... \n',
-        'matched:',
-        matchedNames.join(' '),
-        '\n',
-        'subject:',
+        'subject :',
         message.subject,
-        'floor:',
+        '\n',
+        'floor   :',
         floor,
         '\n --------------'
       );
