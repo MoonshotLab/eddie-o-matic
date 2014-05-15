@@ -1,4 +1,4 @@
-var Q = require('Q');
+var Q = require('q');
 var mail = require('./mail');
 var duino = require('./duino');
 var config = require('../config');
