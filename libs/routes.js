@@ -16,7 +16,7 @@ var parseRequest = function(request){
   });
 
   request.on('end', function(){
-    deferred.resolve(json.parse(body));
+    deferred.resolve(JSON.parse(body));
   });
 
   return deferred.promise;
