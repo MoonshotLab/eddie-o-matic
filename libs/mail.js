@@ -48,6 +48,8 @@ var findFloor = function(content){
     else if(subst.indexOf('4') != -1) floor = 4;
   }
 
+  if(!floor) floor = 1;
+
   return floor;
 };
 
