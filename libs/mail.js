@@ -8,7 +8,7 @@ var contextClient = new ContextIO.Client({
 
 
 var findFloor = function(content){
-  var floor = 1;
+  var floor = 0;
 
   // Try a good guess, look for the word floor and any numbers
   // which are close to the word
