@@ -36,23 +36,3 @@ exports.terms = [
     name: 'Food Truck'
   }
 ];
-
-
-exports.floors = [
-  {
-    number: 1,
-    degrees: 157
-  },
-  {
-    number: 2,
-    degrees: 115
-  },
-  {
-    number: 3,
-    degrees: 65
-  },
-  {
-    number: 4,
-    degrees: 20
-  }
-];

@@ -38,8 +38,7 @@ var makeHTML = function(){
         '/updateState'
       ].join(''),
       accessToken: process.env.SPARK_CORE_TOKEN,
-      terms: config.terms,
-      floors: config.floors
+      terms: config.terms
     });
   });
 }();

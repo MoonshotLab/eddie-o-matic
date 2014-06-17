@@ -77,9 +77,9 @@
       <div class='form-el'>
         <label>Floor</label>
         <select id='floor-selector'>
-          <% for(var i=0; i<floors.length; i++){ %>
-            <option value=<%= floors[i].degrees %>>
-              <%= floors[i].number %>
+          <% for(var i=1; i<5; i++){ %>
+            <option value=<%= i %>>
+              <%= i %>
             </option>
           <% } %>
         </select>

@@ -10,17 +10,13 @@ exports.broadcast = function(opts){
     '/updateState'
   ].join('');
 
-  var degrees = 90;
-  if(opts.floor)
-    degrees = config.floors[opts.floor - 1].degrees;
-
   var postParams = [
     'access_token=',
     process.env.SPARK_CORE_TOKEN,
     '&params=',
     opts.matches[0].pinId,
     ',',
-    degrees
+    opts.floor
   ].join('');
 
   needle.post(url, postParams, function(err, res){
