@@ -1,9 +1,10 @@
+var env = require('../env-config.js')();
 var Q = require('q');
 var config = require('../config');
 var ContextIO = require('contextio');
 var contextClient = new ContextIO.Client({
-  key: process.env.CONTEXT_IO_KEY,
-  secret: process.env.CONTEXT_IO_SECRET
+  key: env.CONTEXT_IO_KEY,
+  secret: env.CONTEXT_IO_SECRET
 });
 
 

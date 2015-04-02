@@ -1,3 +1,4 @@
+var env = require('../env-config.js')();
 var Q = require('q');
 var mail = require('./mail');
 var duino = require('./duino');
@@ -34,10 +35,10 @@ var makeHTML = function(){
     htmlFile = ejs.render(data, {
       ajaxURL: [
         'https://api.spark.io/v1/devices/',
-        process.env.SPARK_CORE_ID,
+        env.SPARK_CORE_ID,
         '/updateState'
       ].join(''),
-      accessToken: process.env.SPARK_CORE_TOKEN,
+      accessToken: env.SPARK_CORE_TOKEN,
       terms: config.terms
     });
   });

@@ -1,3 +1,4 @@
+var env = require('../env-config.js')();
 var Q = require('q');
 var needle = require('needle');
 var config = require('../config');
@@ -6,13 +7,13 @@ exports.broadcast = function(opts){
   var deferred = Q.defer();
   var url = [
     'https://api.spark.io/v1/devices/',
-    process.env.SPARK_CORE_ID,
+    env.SPARK_CORE_ID,
     '/updateState'
   ].join('');
 
   var postParams = [
     'access_token=',
-    process.env.SPARK_CORE_TOKEN,
+    env.SPARK_CORE_TOKEN,
     '&params=',
     opts.matches[0].pinId,
     ',',
