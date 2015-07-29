@@ -1,4 +1,6 @@
-exports.terms = [
+exports.bannedTerms = ['foodsaver'];
+
+exports.categories = [
   {
     // Sweets
     pinId: 0,

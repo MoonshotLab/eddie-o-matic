@@ -1,6 +1,5 @@
 var env = require('../env-config.js')();
 var Q = require('q');
-var config = require('../config');
 var ContextIO = require('contextio');
 var contextClient = new ContextIO.Client({
   key: env.CONTEXT_IO_KEY,
@@ -8,53 +7,23 @@ var contextClient = new ContextIO.Client({
 });
 
 
-var findFloor = function(content){
-  var floor = 0;
+exports.parseRequest = function(request){
+  var deferred = Q.defer();
+  var body = '';
 
-  // Try a good guess, look for the word floor and any numbers
-  // which are close to the word
-  if(content.indexOf('floor') != -1){
-    var index = content.indexOf('floor');
-    var sub = content.substring(index-10, index+10);
-    if(sub.indexOf('1') != -1) floor = 1;
-    else if(sub.indexOf('2') != -1) floor = 2;
-    else if(sub.indexOf('3') != -1) floor = 3;
-    else if(sub.indexOf('4') != -1) floor = 4;
-  }
+  request.on('data', function(chunk){
+    body += chunk;
+  });
 
-  // Give up and look at entire string, searching for
-  // numbers and their appropriate suffix
-  if(!floor){
-    if(content.indexOf('1st') != -1) floor = 1;
-    else if(content.indexOf('2nd') != -1) floor = 2;
-    else if(content.indexOf('3rd') != -1) floor = 3;
-    else if(content.indexOf('4th') != -1) floor = 4;
-  }
+  request.on('end', function(){
+    deferred.resolve(JSON.parse(body));
+  });
 
-  // More guessing
-  if(!floor){
-    if(content.indexOf('first') != -1) floor = 1;
-    else if(content.indexOf('second') != -1) floor = 2;
-    else if(content.indexOf('third') != -1) floor = 3;
-    else if(content.indexOf('fourth') != -1) floor = 4;
-  }
-
-  // Look at the first 20 characters... trying to
-  // avoid the e-mail signature
-  if(!floor){
-    var subst = content.substring(0, 20);
-    if(subst.indexOf('1') != -1) floor = 1;
-    else if(subst.indexOf('2') != -1) floor = 2;
-    else if(subst.indexOf('3') != -1) floor = 3;
-    else if(subst.indexOf('4') != -1) floor = 4;
-  }
-
-  if(!floor) floor = 1;
-
-  return floor;
+  return deferred.promise;
 };
 
 
+// reach out to the context server and get the content of the e-mail
 exports.fetchMessage = function(message){
   var deferred = Q.defer();
 
@@ -65,61 +34,12 @@ exports.fetchMessage = function(message){
     .get(function(err, res){
       if(err) console.log(err);
       if(res && res.body && res.body.length){
-        message.body = res.body[0].content;
+        message.body = res.body[0].content.toLowerCase();
+        message.contents = [message.subject.toLowerCase(),
+          message.body.toLowerCase()].join(' ');
         deferred.resolve(message);
       }
     });
-
-  return deferred.promise;
-};
-
-
-exports.parseMessage = function(message){
-  var deferred = Q.defer();
-  var body = message.body.toLowerCase();
-  var subject = message.subject.toLowerCase();
-  var content = subject + ' ' + body;
-
-  if(content.length < 700){
-    var matches = [];
-    var floor = findFloor(content);
-
-    // Find matching terms
-    config.terms.some(function(term){
-      term.labels.some(function(label){
-        if(content.indexOf(label) != -1){
-          matches.push(term);
-          return;
-        }
-      });
-    });
-
-    if(matches.length){
-      var matchedNames = [];
-      matches.forEach(function(match){
-        matchedNames.push(match.name);
-      });
-
-      console.log(
-        '\n --------------',
-        'new food alert... \n\n',
-        'matched :',
-        matchedNames.join(', '),
-        '\n',
-        'subject :',
-        message.subject,
-        '\n',
-        'floor   :',
-        floor,
-        '\n --------------'
-      );
-
-      message.matches = matches;
-      message.floor = floor;
-
-      deferred.resolve(message);
-    }
-  }
 
   return deferred.promise;
 };

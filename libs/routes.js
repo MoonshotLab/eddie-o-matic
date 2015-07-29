@@ -1,27 +1,11 @@
 var env = require('../env-config.js')();
-var Q = require('q');
 var mail = require('./mail');
+var brains = require('./brains');
 var duino = require('./duino');
 var config = require('../config');
 var ejs = require('ejs');
 var fs = require('fs');
 var htmlFile = null;
-
-
-var parseRequest = function(request){
-  var deferred = Q.defer();
-  var body = '';
-
-  request.on('data', function(chunk){
-    body += chunk;
-  });
-
-  request.on('end', function(){
-    deferred.resolve(JSON.parse(body));
-  });
-
-  return deferred.promise;
-};
 
 
 var makeResponse = function(response, obj){
@@ -39,7 +23,7 @@ var makeHTML = function(){
         '/updateState'
       ].join(''),
       accessToken: env.SPARK_CORE_TOKEN,
-      terms: config.terms
+      terms: config.categories
     });
   });
 }();
@@ -50,27 +34,44 @@ exports.home = function(){
   this.response.end(htmlFile);
 };
 
+
 exports.error = function(){
   console.error('error posting to this app :(');
   makeResponse(this.response, {'oh' : 'no' });
 };
 
+
 exports.newMail = function(){
   var self = this;
   var message = {};
 
-  parseRequest(this.request)
+  mail.parseRequest(this.request)
     .then(function(req){
-      message.subject = req.message_data.subject;
+      message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
       message.messageId = req.message_data.message_id;
 
       mail.fetchMessage(message)
-        .then(mail.parseMessage)
+        .then(brains.checkForBannedTerms)
+        .then(brains.findMatchingTerms)
+        .then(brains.findFloor)
         .then(duino.broadcast)
         .then(function(res){
-          if(!res.err)
-            makeResponse(self.response, {'ok' : 'cool' });
-        });
+          console.log(
+            '\n --------------',
+            'new food alert... \n\n',
+            'matched :',
+            message.matchedLabels.join(', '),
+            '\n',
+            'subject :',
+            message.subject,
+            '\n',
+            'floor   :',
+            message.floor,
+            '\n --------------'
+          );
+
+          makeResponse(self.response, {'ok' : 'cool' });
+        })
     });
 };
