@@ -52,6 +52,7 @@ exports.newMail = function(){
       message.messageId = req.message_data.message_id;
 
       mail.fetchMessage(message)
+        .then(brains.checkLength)
         .then(brains.checkForBannedTerms)
         .then(brains.findMatchingTerms)
         .then(brains.findFloor)
