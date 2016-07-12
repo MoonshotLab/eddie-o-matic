@@ -70,7 +70,6 @@ var startWebhook = function(userId){
   client.users(userId).webhooks().post({
     callback_url      : config.ROOT_URL + '/new-email/new',
     failure_notif_url : config.ROOT_URL + '/new-email/error',
-    filter_to         : 'gratitudes@barkleyus.com',
     include_body      : 1
   });
 };
