@@ -86,6 +86,7 @@ exports.findFloor = function(message){
   }
 
   if(!floor) floor = 1;
+  message.floor = floor;
 
   return Q.resolve(message);
 };
