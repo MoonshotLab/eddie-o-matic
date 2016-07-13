@@ -6,7 +6,7 @@
   "author": "Joe Longstreet",
   "license": "MIT",
   "dependencies": {
-    "contextio": "^0.4.0",
+    "contextio": "^1.0.0",
     "ejs": "^1.0.0",
     "needle": "^0.7.0",
     "pathways": "0.0.11",

@@ -1,9 +1,12 @@
 var env = require('../env-config.js')();
 var Q = require('q');
 var ContextIO = require('contextio');
-var contextClient = new ContextIO.Client({
-  key: env.CONTEXT_IO_KEY,
-  secret: env.CONTEXT_IO_SECRET
+
+
+var contextClient = ContextIO({
+  key       : env.CONTEXT_IO_KEY,
+  secret    : env.CONTEXT_IO_SECRET,
+  version   : 'lite'
 });
 
 
@@ -50,7 +53,7 @@ exports.fetchMessage = function(message){
 // after a week or so. This re-establishes it
 exports.redoWebhooks = function(){
   return new Promise(function(resolve, reject){
-    client.users().get().then(function(users){
+    contextClient.users().get().then(function(users){
       users.forEach(function(user){
         if(user.first_name == 'Ricky' &&
         user.last_name == 'Catto'){
@@ -67,9 +70,9 @@ exports.redoWebhooks = function(){
 
 
 var startWebhook = function(userId){
-  client.users(userId).webhooks().post({
-    callback_url      : config.ROOT_URL + '/new-email/new',
-    failure_notif_url : config.ROOT_URL + '/new-email/error',
+  contextClient.users(userId).webhooks().post({
+    callback_url      : env.ROOT_URL + '/new-email/new',
+    failure_notif_url : env.ROOT_URL + '/new-email/error',
     include_body      : 1
   });
 };
@@ -80,11 +83,11 @@ var startWebhook = function(userId){
 var deleteExistingWebHooks = function(userId, next){
   var completions = 0;
 
-  client.users(userId).webhooks().get().then(function(hooks){
+  contextClient.users(userId).webhooks().get().then(function(hooks){
     if(hooks.length === 0) next();
     hooks.forEach(function(hook){
 
-      client.users(userId).webhooks(hook.webhook_id).delete().then(function(res){
+      contextClient.users(userId).webhooks(hook.webhook_id).delete().then(function(res){
         completions++;
         if(completions == hooks.length) next();
       });
