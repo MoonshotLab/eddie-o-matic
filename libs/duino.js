@@ -15,7 +15,7 @@ exports.broadcast = function(opts){
     'access_token=',
     env.SPARK_CORE_TOKEN,
     '&params=',
-    opts.matches[0].pinId,
+    opts.matchedCategories[0].pinId,
     ',',
     opts.floor
   ].join('');

@@ -52,11 +52,10 @@ exports.newMail = function(){
       message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
       message.messageId = req.message_data.message_id;
+      message.body      = req.message_data.bodies[0].content;
+      message.contents  = message.subject + ' ' + message.body;
 
-      console.log('message:', message);
-
-      mail.fetchMessage(message)
-        .then(brains.checkLength)
+      brains.checkLength(message)
         .then(brains.checkForBannedTerms)
         .then(brains.findMatchingTerms)
         .then(brains.findFloor)

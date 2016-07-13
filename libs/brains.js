@@ -45,6 +45,7 @@ exports.findMatchingTerms = function(message){
 
 exports.findFloor = function(message){
   var floor = 0;
+  var content = message.contents;
 
   // Try a good guess, look for the word floor and any numbers
   // which are close to the word

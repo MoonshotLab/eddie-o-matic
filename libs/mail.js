@@ -26,29 +26,6 @@ exports.parseRequest = function(request){
 };
 
 
-// reach out to the context server and get the content of the e-mail
-exports.fetchMessage = function(message){
-  var deferred = Q.defer();
-
-  contextClient
-    .accounts(message.accountId)
-    .messages(message.messageId)
-    .body()
-    .get(function(err, res){
-      if(err) deferred.reject(err);
-      if(res && res.body && res.body.length){
-        message.body = res.body[0].content.toLowerCase();
-        message.contents = [message.subject.toLowerCase(),
-          message.body.toLowerCase()].join(' ');
-        deferred.resolve(message);
-      }
-    });
-
-  return deferred.promise;
-};
-
-
-
 // for some reason the context.io webhook just stops working
 // after a week or so. This re-establishes it
 exports.redoWebhooks = function(){

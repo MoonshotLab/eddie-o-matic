@@ -16,7 +16,7 @@ exports.categories = [
   {
     // Left Over Lunch
     pinId: 2,
-    labels: ['left over', 'leftover', 'buffet', 'food', 'sandwich', 'salad', 'dean', 'deluca', 'muffaletta', 'meat'],
+    labels: ['left over', 'leftover', 'buffet', 'food', 'sandwich', 'salad', 'dean', 'deluca', 'muffaletta', 'meat', 'pizza'],
     name: 'Left Over Lunch'
   },
   {
