@@ -21,7 +21,7 @@ exports.broadcast = function(opts){
   ].join('');
 
   needle.post(url, postParams, function(err, res){
-    if(err) console.error(err);
+    if(err) deferred.reject(err);
     else console.log('sent to server');
 
     deferred.resolve({

@@ -11,6 +11,7 @@ exports.checkForBannedTerms = function(message){
   });
 
   if(!dealBreakers) return Q.resolve(message);
+  else Q.reject('found banned terms');
 };
 
 
@@ -18,6 +19,7 @@ exports.checkForBannedTerms = function(message){
 exports.checkLength = function(message){
   if(message.contents.length < 700)
     return Q.resolve(message);
+  else Q.reject('message not long enough');
 };
 
 
@@ -37,6 +39,7 @@ exports.findMatchingTerms = function(message){
 
   if(message.matchedCategories.length)
     return Q.resolve(message);
+  else return Q.reject('no matching terms found');
 };
 
 
