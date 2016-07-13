@@ -45,11 +45,15 @@ exports.newMail = function(){
   var self = this;
   var message = {};
 
+  console.log('new mail received');
+
   mail.parseRequest(this.request)
     .then(function(req){
       message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
       message.messageId = req.message_data.message_id;
+
+      console.log('message:', message);
 
       mail.fetchMessage(message)
         .then(brains.checkLength)
@@ -73,6 +77,8 @@ exports.newMail = function(){
           );
 
           makeResponse(self.response, {'ok' : 'cool' });
-        })
+        }).fail(function(e){
+          console.log(e);
+        });
     });
 };

@@ -35,7 +35,7 @@ exports.fetchMessage = function(message){
     .messages(message.messageId)
     .body()
     .get(function(err, res){
-      if(err) console.log(err);
+      if(err) deferred.reject(err);
       if(res && res.body && res.body.length){
         message.body = res.body[0].content.toLowerCase();
         message.contents = [message.subject.toLowerCase(),
