@@ -71,8 +71,8 @@ exports.redoWebhooks = function(){
 
 var startWebhook = function(userId){
   contextClient.users(userId).webhooks().post({
-    callback_url      : env.ROOT_URL + '/new-email/new',
-    failure_notif_url : env.ROOT_URL + '/new-email/error',
+    callback_url      : env.ROOT_URL + '/new-email',
+    failure_notif_url : env.ROOT_URL + '/new-email',
     include_body      : 1
   });
 };
