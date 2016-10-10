@@ -9,7 +9,7 @@ exports.categories = [
   },
   {
     // Drinks
-    pinId: 0,
+    pinId: 2,
     labels: ['margarita', 'beer', 'alcohol', 'thirsty thursday'],
     name: 'Drinks'
   },
@@ -21,19 +21,19 @@ exports.categories = [
   },
   {
     // Pastries
-    pinId: 2,
+    pinId: 5,
     labels: ['cup cake', 'cupcake', 'donut', 'bagel', 'muffin'],
     name: 'Pastries'
   },
   {
     // Coffee Truck
-    pinId: 5,
+    pinId: 4,
     labels: ['coffee'],
     name: 'Coffee Truck'
   },
   {
     // Food Truck
-    pinId: 4,
+    pinId: 0,
     labels: ['food truck', 'truck'],
     name: 'Food Truck'
   }
