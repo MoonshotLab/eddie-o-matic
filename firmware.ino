@@ -2,7 +2,7 @@ Servo FLOOR_SELECTOR;
 Servo BELL;
 
 int lights[] = {D0, D1, D2, D3, D4, D5};
-int locationMap[] = {157, 115, 65, 20};
+int locationMap[] = {155, 115, 65, 20};
 int button = D6;
 
 
@@ -49,7 +49,7 @@ void setup()
 {
     FLOOR_SELECTOR.attach(A0);
     BELL.attach(A4);
-  
+
     pinMode(button,INPUT);
 
     FLOOR_SELECTOR.write(88);
@@ -76,19 +76,19 @@ void loop()
     if(digitalRead(button)==1)
     {
         foodAndFloor(D1, 115);
-        
+
         BELL.write(165);
         delay(150);
         BELL.write(125);
         delay(150);
-        
+
         BELL.write(165);
         delay(300);
         BELL.write(125);
         delay(150);
-        
+
         delay(3000);
-        
+
         reset();
-    } 
+    }
 }
