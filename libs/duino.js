@@ -21,6 +21,9 @@ exports.broadcast = function(opts){
     opts.floor
   ].join('');
 
+  console.log('url:', url);
+  console.log('postParams', postParams);
+
   needle.post(url, postParams, function(err, res){
     console.log('attemtping to post to server');
     if(err) {
