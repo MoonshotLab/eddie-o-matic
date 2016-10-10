@@ -3,6 +3,7 @@ Servo BELL;
 
 int lights[] = {D0, D1, D2, D3, D4, D5};
 int locationMap[] = {155, 115, 65, 20};
+int neutralAngle = 90;
 int button = D6;
 
 
@@ -41,7 +42,7 @@ void reset()
     {
         digitalWrite(lights[i], 0);
     }
-    FLOOR_SELECTOR.write(88);
+    FLOOR_SELECTOR.write(neutralAngle);
 }
 
 
@@ -52,7 +53,7 @@ void setup()
 
     pinMode(button,INPUT);
 
-    FLOOR_SELECTOR.write(88);
+    FLOOR_SELECTOR.write(neutralAngle);
     delay(500);
     BELL.write(125);
 
