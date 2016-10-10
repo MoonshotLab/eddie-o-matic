@@ -4,6 +4,7 @@ var Q = require('q');
 
 // if one of these terms is matched, then ignore
 exports.checkForBannedTerms = function(message){
+  console.log('checking for banned terms...');
   var dealBreakers = false;
   config.bannedTerms.some(function(term){
     if(message.contents.indexOf(term) != -1)
@@ -24,6 +25,7 @@ exports.checkLength = function(message){
 
 
 exports.findMatchingTerms = function(message){
+  console.log('finding matching terms');
   message.matchedCategories = [];
   message.matchedLabels = [];
 
@@ -44,6 +46,7 @@ exports.findMatchingTerms = function(message){
 
 
 exports.findFloor = function(message){
+  console.log('finding floor');
   var floor = 0;
   var content = message.contents;
 

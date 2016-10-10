@@ -4,6 +4,7 @@ var needle = require('needle');
 var config = require('../config');
 
 exports.broadcast = function(opts){
+  console.log('broadcasting');
   var deferred = Q.defer();
   var url = [
     'https://api.spark.io/v1/devices/',
@@ -21,7 +22,11 @@ exports.broadcast = function(opts){
   ].join('');
 
   needle.post(url, postParams, function(err, res){
-    if(err) deferred.reject(err);
+    console.log('attemtping to post to server');
+    if(err) {
+      console.log('error in posting to server');
+      deferred.reject(err);
+    }
     else console.log('sent to server');
 
     deferred.resolve({
