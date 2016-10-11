@@ -3,7 +3,7 @@ Servo BELL;
 
 int lights[] = {D0, D1, D2, D3, D4, D5};
 int locationMap[] = {140, 105, 65, 30};
-int neutralAngle = 85;
+int neutralAngle = 82;
 int button = D6;
 int bellMax = 72;
 int bellMin = 85;
