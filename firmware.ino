@@ -78,7 +78,7 @@ void loop()
 {
     if(digitalRead(button)==1)
     {
-        foodAndFloor(lights[2], locationMap[3]);
+        foodAndFloor(lights[2], locationMap[2]);
 
         BELL.write(bellMax);
         delay(150);
