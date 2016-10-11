@@ -2,9 +2,11 @@ Servo FLOOR_SELECTOR;
 Servo BELL;
 
 int lights[] = {D0, D1, D2, D3, D4, D5};
-int locationMap[] = {155, 115, 65, 20};
-int neutralAngle = 90;
+int locationMap[] = {140, 105, 65, 30};
+int neutralAngle = 85;
 int button = D6;
+int bellMax = 72;
+int bellMin = 85;
 
 
 // Pass in params like 1,3 pin for food then floor
@@ -29,9 +31,9 @@ void ringBellTimes(int occ)
 {
     for(int i=0; i<occ; i++)
     {
-        BELL.write(165);
+        BELL.write(bellMax);
         delay(500);
-        BELL.write(125);
+        BELL.write(bellMin);
         delay(500);
     }
 }
@@ -49,13 +51,13 @@ void reset()
 void setup()
 {
     FLOOR_SELECTOR.attach(A0);
-    BELL.attach(A4);
+    BELL.attach(A1);
 
     pinMode(button,INPUT);
 
     FLOOR_SELECTOR.write(neutralAngle);
     delay(500);
-    BELL.write(125);
+    BELL.write(bellMin);
 
     for(int i=0; i<6; i++)
     {
@@ -76,16 +78,16 @@ void loop()
 {
     if(digitalRead(button)==1)
     {
-        foodAndFloor(D1, 115);
+        foodAndFloor(lights[2], locationMap[3]);
 
-        BELL.write(165);
+        BELL.write(bellMax);
         delay(150);
-        BELL.write(125);
+        BELL.write(bellMin);
         delay(150);
 
-        BELL.write(165);
+        BELL.write(bellMax);
         delay(300);
-        BELL.write(125);
+        BELL.write(bellMin);
         delay(150);
 
         delay(3000);
