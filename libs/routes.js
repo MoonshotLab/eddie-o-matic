@@ -52,20 +52,21 @@ exports.newMail = function(){
     db.set('emails', []).value()
   }
 
-  var messageId = req.message_data.message_id;
-
-  if (db.get('emails').find({id: messageId}).size().value() > 0) {
-    // already in db
-    console.log('duplicate mail received; skipping');
-    return;
-  } else {
-    // add to db
-    console.log('new mail received');
-    db.get('emails').push({id: messageId}).value()
-  }
-
   mail.parseRequest(this.request)
     .then(function(req){
+
+      var messageId = req.message_data.message_id;
+
+      if (db.get('emails').find({id: messageId}).size().value() > 0) {
+        // already in db
+        console.log('duplicate mail received; skipping');
+        return;
+      } else {
+        // add to db
+        console.log('new mail received');
+        db.get('emails').push({id: messageId}).value()
+      }
+
       message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
       message.messageId = messageId;
