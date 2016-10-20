@@ -46,23 +46,21 @@ exports.newMail = function(){
   var self = this;
   var message = {};
 
-  var db = low('db.json', {
-    storage: fileAsync
-  });
+  var db = low('db.json', { storage: require('lowdb/lib/file-async') });
 
   if (!db.has('emails').value()) {
     db.set('emails', []).value()
   }
 
-  console.log('new mail received');
   var messageId = req.message_data.message_id;
 
   if (db.get('emails').find({id: messageId}).size().value() > 0) {
     // already in db
-    console.log('duplicate; skipping');
+    console.log('duplicate mail received; skipping');
     return;
   } else {
     // add to db
+    console.log('new mail received');
     db.get('emails').push({id: messageId}).value()
   }
 
