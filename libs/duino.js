@@ -39,21 +39,20 @@ exports.broadcast = function(opts){
   //   });
   // });
 
-  request.post({
-    url: url,
-    qs: {
+  request.post(url,
+    form: {
       access_token: env.SPARK_CORE_TOKEN,
       params: opts.matchedCategories[0].pinId + ',' + opts.floor
     },
-    method: 'POST'
   }, function(err, res) {
     console.log('attempting to post to server');
-    if (err) {
+
+    if (err || res.statusCode != 200) {
       console.log('error in posting to server');
       deferred.reject(err);
     }
-    else console.log('sent to server');
-    console.log('result: ' + JSON.stringify(res));
+
+    console.log('successfully sent to server');
 
     deferred.resolve({
       err: err,
