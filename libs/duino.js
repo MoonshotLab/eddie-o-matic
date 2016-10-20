@@ -39,11 +39,11 @@ exports.broadcast = function(opts){
   //   });
   // });
 
-  request.post(url,
+  request.post(url, {
     form: {
       access_token: env.SPARK_CORE_TOKEN,
       params: opts.matchedCategories[0].pinId + ',' + opts.floor
-    },
+    }
   }, function(err, res) {
     console.log('attempting to post to server');
 
