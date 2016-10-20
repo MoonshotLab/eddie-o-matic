@@ -5,6 +5,7 @@ var duino = require('./duino');
 var config = require('../config');
 var ejs = require('ejs');
 var fs = require('fs');
+var low = require('lowdb');
 var htmlFile = null;
 
 
@@ -45,13 +46,31 @@ exports.newMail = function(){
   var self = this;
   var message = {};
 
+  var db = low('db.json', {
+    storage: fileAsync
+  });
+
+  if (!db.has('emails').value()) {
+    db.set('emails', []).value()
+  }
+
   console.log('new mail received');
+  var messageId = req.message_data.message_id;
+
+  if (db.get('emails').find({id: messageId}).size().value() > 0) {
+    // already in db
+    console.log('duplicate; skipping');
+    return;
+  } else {
+    // add to db
+    db.get('emails').push({id: messageId}).value()
+  }
 
   mail.parseRequest(this.request)
     .then(function(req){
       message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
-      message.messageId = req.message_data.message_id;
+      message.messageId = messageId;
       message.from      = req.message_data.addresses.from.email;
       message.body      = req.message_data.bodies[0].content;
       message.contents  = message.subject + ' ' + message.body;
@@ -82,4 +101,6 @@ exports.newMail = function(){
           console.log('Error: ' + e);
         });
     });
+
+
 };
