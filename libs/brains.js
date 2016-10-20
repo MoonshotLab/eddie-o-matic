@@ -5,7 +5,10 @@ var Q = require('q');
 exports.verifyFromBarkley = function(message){
   console.log('making sure email is from a barkley address');
   console.log('from: ' + message.from);
-  return Q.resolve(message);
+
+  if (message.from.indexOf("barkleyus.com") != -1) {
+    return Q.resolve(message);
+  } else Q.reject('message not from barkley address');
 }
 
 // if one of these terms is matched, then ignore
