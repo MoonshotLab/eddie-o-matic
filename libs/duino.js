@@ -13,32 +13,6 @@ exports.broadcast = function(opts){
     '/updateState'
   ].join('');
 
-  // var postParams = [
-  //   'access_token=',
-  //   env.SPARK_CORE_TOKEN,
-  //   '&params=',
-  //   opts.matchedCategories[0].pinId,
-  //   ',',
-  //   opts.floor
-  // ].join('');
-  //
-  // console.log('url:', url);
-  // console.log('postParams', postParams);
-  //
-  // needle.post(url, postParams, function(err, res){
-  //   console.log('attemtping to post to server');
-  //   if(err) {
-  //     console.log('error in posting to server');
-  //     deferred.reject(err);
-  //   }
-  //   else console.log('sent to server');
-  //
-  //   deferred.resolve({
-  //     err: err,
-  //     res: res
-  //   });
-  // });
-
   request.post(url, {
     form: {
       access_token: env.SPARK_CORE_TOKEN,
@@ -46,13 +20,14 @@ exports.broadcast = function(opts){
     }
   }, function(err, res) {
     console.log('attempting to post to server');
+    console.log('result: ' + JSON.stringify(res));
 
     if (err || res.statusCode != 200) {
       console.log('error in posting to server');
       deferred.reject(err);
+    } else {
+      console.log('successfully sent to server');
     }
-
-    console.log('successfully sent to server');
 
     deferred.resolve({
       err: err,
