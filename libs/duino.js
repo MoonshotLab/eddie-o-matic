@@ -53,6 +53,7 @@ exports.broadcast = function(opts){
       deferred.reject(err);
     }
     else console.log('sent to server');
+    console.log('result: ' + res);
 
     deferred.resolve({
       err: err,
