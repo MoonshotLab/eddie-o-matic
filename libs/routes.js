@@ -57,21 +57,11 @@ exports.newMail = function(){
       message.contents  = message.subject + ' ' + message.body;
 
       brains.verifyFromBarkley(message)
-        .then(function(message) {
-          return brains.checkLength(message)
-        })
-        .then(function(message) {
-          return brains.checkForBannedTerms(message)
-        })
-        .then(function(message) {
-          return brains.findMatchingTerms(message)
-        })
-        .then(function(message) {
-          return brains.findFloor(message)
-        })
-        .then(function(message) {
-          return duino.broadcast(message)
-        })
+        .then(brains.checkLength)
+        .then(brains.checkForBannedTerms)
+        .then(brains.findMatchingTerms)
+        .then(brains.findFloor)
+        .then(duino.broadcast)
         .then(function(res){
           console.log(
             '\n --------------',
@@ -89,7 +79,7 @@ exports.newMail = function(){
 
           makeResponse(self.response, {'ok' : 'cool' });
         }).fail(function(e){
-          console.log(e);
+          console.log('Error: ' + e);
         });
     });
 };
