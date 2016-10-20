@@ -1,6 +1,12 @@
 var config = require('../config');
 var Q = require('q');
 
+// only consider messages from a barkley address
+exports.verifyFromBarkley = function(message){
+  console.log('making sure email is from a barkley address');
+  console.log('from: ' + message.from);
+  return Q.resolve(message);
+}
 
 // if one of these terms is matched, then ignore
 exports.checkForBannedTerms = function(message){
@@ -14,7 +20,6 @@ exports.checkForBannedTerms = function(message){
   if(!dealBreakers) return Q.resolve(message);
   else Q.reject('found banned terms');
 };
-
 
 // ignore daily planet and other long e-mails
 exports.checkLength = function(message){

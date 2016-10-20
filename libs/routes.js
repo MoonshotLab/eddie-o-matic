@@ -52,10 +52,12 @@ exports.newMail = function(){
       message.subject   = req.message_data.subject;
       message.accountId = req.account_id;
       message.messageId = req.message_data.message_id;
+      message.from      = req.message_data.addresses.from.email;
       message.body      = req.message_data.bodies[0].content;
       message.contents  = message.subject + ' ' + message.body;
 
-      brains.checkLength(message)
+      brains.verifyFromBarkley(message)
+        .then(brains.checkLength)
         .then(brains.checkForBannedTerms)
         .then(brains.findMatchingTerms)
         .then(brains.findFloor)
