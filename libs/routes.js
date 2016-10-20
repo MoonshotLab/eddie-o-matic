@@ -97,7 +97,7 @@ exports.newMail = function(){
 
           makeResponse(self.response, {'ok' : 'cool' });
         }).fail(function(e){
-          console.log('Error: ' + e);
+          console.log(e);
         });
     });
 
