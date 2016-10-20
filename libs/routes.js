@@ -56,8 +56,6 @@ exports.newMail = function(){
       message.body      = req.message_data.bodies[0].content;
       message.contents  = message.subject + ' ' + message.body;
 
-      console.log(JSON.stringify(message));
-
       brains.verifyFromBarkley(message)
         .then(function(message) {
           return brains.checkLength(message)

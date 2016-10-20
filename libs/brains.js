@@ -24,6 +24,7 @@ exports.checkLength = function(message){
 // if one of these terms is matched, then ignore
 exports.checkForBannedTerms = function(message){
   console.log('checking for banned terms...');
+  console.log(JSON.stringify(message));
   var dealBreakers = false;
   config.bannedTerms.some(function(term){
     if(message.contents.indexOf(term) != -1)
