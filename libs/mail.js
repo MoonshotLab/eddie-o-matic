@@ -32,8 +32,7 @@ exports.redoWebhooks = function(){
   return new Promise(function(resolve, reject){
     contextClient.users().get().then(function(users){
       users.forEach(function(user){
-        if(user.first_name == 'Ricky' &&
-        user.last_name == 'Catto'){
+        if(user.email_addresses.length && user.email_addresses[0] == 'eddieomatic@barkleyus.com'){
           deleteExistingWebHooks(user.id, function(){
             startWebhook(user.id);
             resolve();
@@ -62,8 +61,8 @@ var deleteExistingWebHooks = function(userId, next){
 
   contextClient.users(userId).webhooks().get().then(function(hooks){
     if(hooks.length === 0) next();
+    
     hooks.forEach(function(hook){
-
       contextClient.users(userId).webhooks(hook.webhook_id).delete().then(function(res){
         completions++;
         if(completions == hooks.length) next();
